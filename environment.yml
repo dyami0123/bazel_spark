@@ -1,0 +1,12 @@
+name: delta_testing
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python>=3.11
+  - pip=22.3.1
+  - setuptools=66.1.1               # Install current repo as editable package
+  - pip:
+    - delta-spark #TODO: pin this
+    - boto3
