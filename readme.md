@@ -1,17 +1,26 @@
-# conda_spark_setup
+# Bazel Spark
 
-This is a repository to help setup a conda environment for Spark and Delta Lake.
+## Problem Statement:
 
-The thought is that these files can be copied into a repo of your own and then used to create a conda environment for Spark and Delta Lake. Default installs of spark & delta lake are simple, but I personally ran into issues with juggling multiple environments, and where to put the files. additionally, the follow on configuration of the spark install for Delta & S3 compatibility is a bit of a pain.
+Pyspark and Delta-Lake are very powerful tools, but the requirement of workign with them via DataBricks can be restrictive for some projects. Although the two building blocks ([PySpark](https://www.databricks.com/glossary/pyspark) & [Delta-Lake](https://delta.io/) are open source) their setup & implementation can be tricky to get right. This project aims to fix that using [Bazel](https://bazel.build/) an automated application setup & testing framework. 
 
-so, this aims to automate this process!
+## Goals & Requirements
+- Streamlined, One-Click Setup
+- Environments setup using anaconda
+    - Given that a large part of data science & analytics occurs using conda as an environment manager, this tool will be built on top of conda.
+- Mutliple distinct environments can be supported on a single machine
+    - modifications to a spark install for one environment should not interfere with other spark installs
+- Support for S3 data storage
+- Platform-Agnostic installation (Mac/Windows/Linux) *stretch goal*
+- UI for better UX *stretch goal*
+
+## Description
 
 What it does:
 - Creates a fresh conda environment based on the environment.yml file
 - Installs Spark & Delta Lake into the conda environment, placing required files in the conda environment (e.g. env_name/lib/python3.11/site-packages/pyspark/...)
 - configures the Spark environment to use Delta & S3
 
-note: this is still a work in progress, and is not yet ready for use.
 
 ## Prerequisites
 
