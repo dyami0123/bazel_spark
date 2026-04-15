@@ -23,7 +23,7 @@ def get_value(package_name, type):
 def _get_env_name():
     return ENV_NAME
 
-ENV_NAME = "delta_testing_bazel_other"
+ENV_NAME = "binder_fa_spark"
 
 VERSIONS = {
     "PYTHON": "3.11",

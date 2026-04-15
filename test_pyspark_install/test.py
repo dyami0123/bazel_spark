@@ -1,18 +1,10 @@
 import delta
 import mimesis
 import pyspark
-
-try:
-    # FIXME: this is bad practice, remove this
-    from aws_keys import aws_access_key_id, aws_secret_access_key
-except ImportError:
-    raise Exception("aws_keys.py not found")
-
 from pyspark.sql import SparkSession
 
 
 def get_spark() -> SparkSession:
-    warehouse_dir = "s3a://da-delta-lake-testing/test_warehouse_delta"
     builder = (
         pyspark.sql.SparkSession.builder.appName("TestApp")
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
@@ -20,15 +12,8 @@ def get_spark() -> SparkSession:
             "spark.sql.catalog.spark_catalog",
             "org.apache.spark.sql.delta.catalog.DeltaCatalog",
         )
-        .config(
-            "spark.hadoop.fs.s3a.aws.credentials.provider",
-            "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider",
-        )
-        .config("spark.hadoop.fs.s3a.access.key", aws_access_key_id)
-        .config("spark.hadoop.fs.s3a.secret.key", aws_secret_access_key)
-        .config("spark.sql.warehouse.dir", warehouse_dir)
-        .config("spark.hadoop.fs.s3a.endpoint", "s3.amazonaws.com")
-        .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+        .config("spark.driver.host", "127.0.0.1")
+        .config("spark.driver.bindAddress", "127.0.0.1")
     )
     # spark = builder.getOrCreate()
     spark = delta.configure_spark_with_delta_pip(builder).getOrCreate()
