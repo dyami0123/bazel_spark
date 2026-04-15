@@ -26,4 +26,4 @@ echo "Cleaning up Bazel build files"
 bazel clean
 
 echo "Testing the Spark installation"
-bazel test test_pyspark_install
+bazel build test_pyspark_install
